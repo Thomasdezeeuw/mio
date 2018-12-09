@@ -296,7 +296,7 @@ impl PollOpt {
     ///
     /// [`Poll`]: struct.Poll.html
     #[inline]
-    pub fn is_edge(&self) -> bool {
+    pub fn is_edge(self) -> bool {
         self.contains(PollOpt::edge())
     }
 
@@ -316,7 +316,7 @@ impl PollOpt {
     ///
     /// [`Poll`]: struct.Poll.html
     #[inline]
-    pub fn is_level(&self) -> bool {
+    pub fn is_level(self) -> bool {
         self.contains(PollOpt::level())
     }
 
@@ -336,7 +336,7 @@ impl PollOpt {
     ///
     /// [`Poll`]: struct.Poll.html
     #[inline]
-    pub fn is_oneshot(&self) -> bool {
+    pub fn is_oneshot(self) -> bool {
         self.contains(PollOpt::oneshot())
     }
 
@@ -380,8 +380,8 @@ impl PollOpt {
     ///
     /// [`Poll`]: struct.Poll.html
     #[inline]
-    pub fn contains(&self, other: PollOpt) -> bool {
-        (*self & other) == other
+    pub fn contains(self, other: PollOpt) -> bool {
+        (self & other) == other
     }
 
     /// Adds all options represented by `other` into `self`.
@@ -598,7 +598,7 @@ impl Ready {
     /// assert!(ready.is_empty());
     /// ```
     #[inline]
-    pub fn is_empty(&self) -> bool {
+    pub fn is_empty(self) -> bool {
         self.0 == EMPTY
     }
 
@@ -613,7 +613,7 @@ impl Ready {
     /// assert!(ready.is_readable());
     /// ```
     #[inline]
-    pub fn is_readable(&self) -> bool {
+    pub fn is_readable(self) -> bool {
         self.contains(Ready::READABLE)
     }
 
@@ -628,7 +628,7 @@ impl Ready {
     /// assert!(ready.is_writable());
     /// ```
     #[inline]
-    pub fn is_writable(&self) -> bool {
+    pub fn is_writable(self) -> bool {
         self.contains(Ready::WRITABLE)
     }
 
@@ -655,7 +655,7 @@ impl Ready {
     /// Method is available on all platforms, but not all platforms (can) use
     /// this indicator.
     #[inline]
-    pub fn is_error(&self) -> bool {
+    pub fn is_error(self) -> bool {
         self.contains(Ready(ERROR))
     }
 
@@ -684,7 +684,7 @@ impl Ready {
     /// Method is available on all platforms, but not all platforms (can) use
     /// this indicator.
     #[inline]
-    pub fn is_hup(&self) -> bool {
+    pub fn is_hup(self) -> bool {
         self.contains(Ready(HUP))
     }
 
@@ -707,7 +707,7 @@ impl Ready {
     /// Method is available on all platforms, but not all platforms (can) use
     /// this indicator.
     #[inline]
-    pub fn is_priority(&self) -> bool {
+    pub fn is_priority(self) -> bool {
         self.contains(Ready(PRIORITY))
     }
 
@@ -730,7 +730,7 @@ impl Ready {
     /// Method is available on all platforms, but not all platforms (can) use
     /// this indicator.
     #[inline]
-    pub fn is_aio(&self) -> bool {
+    pub fn is_aio(self) -> bool {
         self.contains(Ready(AIO))
     }
 
@@ -753,7 +753,7 @@ impl Ready {
     /// Method is available on all platforms, but not all platforms (can) use
     /// this indicator.
     #[inline]
-    pub fn is_lio(&self) -> bool {
+    pub fn is_lio(self) -> bool {
         self.contains(Ready(LIO))
     }
 
@@ -826,7 +826,7 @@ impl Ready {
     /// assert!(readiness.contains(readiness));
     /// ```
     #[inline]
-    pub fn contains(&self, other: Ready) -> bool {
+    pub fn contains(self, other: Ready) -> bool {
         (self.0 & other.0) == other.0
     }
 
@@ -877,7 +877,7 @@ impl Ready {
     /// let ready2 = Ready::from_usize(ready_usize);
     /// assert_eq!(ready, ready2);
     /// ```
-    pub fn as_usize(&self) -> usize {
+    pub fn as_usize(self) -> usize {
         self.0 as usize
     }
 }
@@ -1069,7 +1069,7 @@ impl Interests {
     /// ```
     ///
     /// [`Poll`]: struct.Poll.html
-    pub fn is_readable(&self) -> bool {
+    pub fn is_readable(self) -> bool {
         (self.0.get() & READABLE) != 0
     }
 
@@ -1088,7 +1088,7 @@ impl Interests {
     /// ```
     ///
     /// [`Poll`]: struct.Poll.html
-    pub fn is_writable(&self) -> bool {
+    pub fn is_writable(self) -> bool {
         (self.0.get() & WRITABLE) != 0
     }
 
@@ -1115,7 +1115,7 @@ impl Interests {
         target_os = "macos"
     ))]
     #[inline]
-    pub fn is_aio(&self) -> bool {
+    pub fn is_aio(self) -> bool {
         (self.0.get() & AIO) != 0
     }
 
@@ -1136,7 +1136,7 @@ impl Interests {
     /// [`Poll`]: struct.Poll.html
     #[inline]
     #[cfg(any(target_os = "freebsd"))]
-    pub fn is_lio(&self) -> bool {
+    pub fn is_lio(self) -> bool {
         (self.0.get() & LIO) != 0
     }
 
@@ -1144,7 +1144,7 @@ impl Interests {
     ///
     /// It should and only can be used in crate, and will be deprecated in the future.
     /// So don't use it unless you have no other choice.
-    pub(crate) fn to_ready(&self) -> Ready {
+    pub(crate) fn to_ready(self) -> Ready {
         Ready(self.0.get() as u8)
     }
 }
